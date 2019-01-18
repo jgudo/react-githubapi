@@ -15,12 +15,12 @@ class App extends Component {
   loader = React.createRef();
   
   componentDidUpdate() {
-    localStorage.setItem('githubUser', JSON.stringify(this.state));
+    if('localStorage' in window) {
+      localStorage.setItem('githubUser', JSON.stringify(this.state));
+    }
   }
 
   componentDidMount() {
-    this.loader.current.style.display = 'none';
-
     try {
         const json = localStorage.getItem('githubUser');
         const user = JSON.parse(json);
@@ -71,11 +71,11 @@ class App extends Component {
 
  render() {
   return (
-    <div className="container">
+    <div className="container" >
       <div className="input-field">
         <input 
           type="text" 
-          placeholder="Enter username"
+          placeholder="enter github username"
           autoFocus
           onChange={this.onInputChange}
           value={this.state.query}
