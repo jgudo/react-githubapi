@@ -23,4 +23,8 @@
 .repo-info {
   padding: 5px 0;
   display: inline-block;
+
+  span {
+    font-weight: bold;
+  }
 }

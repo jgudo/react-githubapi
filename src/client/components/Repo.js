@@ -8,11 +8,9 @@ const Repo = (props) => (
         return (
           <div key={repo.id} className="repo">
             <a href={repo.url} className="repo-link"><h1>{repo.name}</h1></a>
-            <p>
-              <span className="repo-info">Language: {repo.language}</span><br/>
-              <span className="repo-info">Forks: {repo.forks}</span><br/>
-              <span className="repo-info">Watchers: {repo.watchers}</span>
-            </p>
+              <p className="repo-info">Language: <span>{repo.language} &nbsp; | &nbsp;</span></p>
+              <p className="repo-info">Forks: <span>{repo.forks} &nbsp; | &nbsp;</span></p>
+              <p className="repo-info">Watchers: <span>{repo.watchers}</span></p>
           </div>
         )
       })}
