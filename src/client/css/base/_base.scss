@@ -1,3 +1,21 @@
-body {
-  background: #f1f1f1;
+* {
+  box-sizing: border-box;
 }
+
+body {
+  background: #f8f8f8;
+  font-family: 'Roboto', sans-serif;
+}
+
+input {
+  padding: 15px;
+  background: transparent;
+  border: none;
+  border-bottom: 1px solid #d1d1d1;
+  width: 100%;
+  font-size: 2rem;
+  &:focus {
+    outline: none;
+  }
+}
+

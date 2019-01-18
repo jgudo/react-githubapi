@@ -12,6 +12,31 @@ class App extends Component {
     repos: null
   };
 
+  loader = React.createRef();
+  
+  componentDidUpdate() {
+    localStorage.setItem('githubUser', JSON.stringify(this.state));
+  }
+
+  componentDidMount() {
+    this.loader.current.style.display = 'none';
+
+    try {
+        const json = localStorage.getItem('githubUser');
+        const user = JSON.parse(json);
+        if(user) {
+            this.setState(() => ({
+              query: user.query,
+              data: user.data,
+              repos: user.repos,
+              error: undefined
+            }));
+        }
+    } catch(e) {
+        console.log(e);
+    } 
+  }
+
   getUser = debounce( async(username) => {
     if (this._cancelFetch) {
       this._cancelFetch.cancel();
@@ -22,36 +47,48 @@ class App extends Component {
       const user = await axios.get(`https://api.github.com/users/${username}`, {cancelToken: this._cancelFetch.token});
       const repos = await axios.get(`https://api.github.com/users/${username}/repos`);
       if(user) {
-        this.setState(() => ({ data: user.data, repos: repos.data }));
+        this.setState(() => ({ data: user.data, repos: repos.data, error: undefined }));
+        this.loader.current.style.display = 'none';
       }
     } catch(e) {
-      this.setState(() => ({ data: null, repos: null }));
+      this.loader.current.style.display = 'none';
+      this.setState(() => ({ data: null, repos: null, error: 'user not found' }));
     }
     
   }, 200);
 
-
   onInputChange = (e) => {
     let input = e.target.value;
     this.setState(() => ({query: input}));
-    this.getUser(input);
+    if(input.length === 0) {
+      this.loader.current.style.display = 'none';
+    } else {
+      this.loader.current.style.display = 'block';
+      this.getUser(input);
+    }
+    
   }
 
  render() {
   return (
-    <div>
-      <input type="text" onChange={this.onInputChange}/>
-      {this.state.data ? (
+    <div className="container">
+      <div className="input-field">
+        <input 
+          type="text" 
+          placeholder="Enter username"
+          autoFocus
+          onChange={this.onInputChange}
+          value={this.state.query}
+        />
+        <div className="loader" ref={this.loader}></div>
+      </div>
+      {this.state.data && (
         <React.Fragment>
           <User user={this.state.data}/>
-          <div>Public Repos: {this.state.data.public_repos}</div>
           <Repo repos={this.state.repos}/>
         </React.Fragment>
-      ): (
-        <div>
-          <p>No user found</p>
-        </div>
       )}
+      {this.state.error && <p className="result-info">{this.state.error}</p>}
     </div>
     
   ); 

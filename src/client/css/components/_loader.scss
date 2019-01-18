@@ -1,0 +1,18 @@
+.loader {
+  width: 30px;
+  height: 30px;
+  border: 3px solid blue;
+  border-bottom: none;
+  border-left: none;
+  border-radius: 50%;
+  position: absolute;
+  right: 20px;
+  top: 15px;
+  animation: rotate .2s ease infinite;
+}
+
+@keyframes rotate {
+  to {
+    transform: rotate(360deg);
+  }
+}

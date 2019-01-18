@@ -1,0 +1,26 @@
+.repo-wrapper {
+  padding: 20px 15px;
+  background: #fff;
+  border-radius: 5px;
+  margin-top: 1.5rem;
+  box-shadow: 0 15px 25px rgba(0,0,0,.05);
+}
+.repo {
+  padding: 20px;
+  border-bottom: 1px solid #e1e1e1;
+
+  &:last-child { border-bottom: none;}
+}
+
+.repo-list {
+
+}
+
+.repo-link {
+  text-decoration: none;
+}
+
+.repo-info {
+  padding: 5px 0;
+  display: inline-block;
+}
