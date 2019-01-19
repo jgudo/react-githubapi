@@ -80,7 +80,7 @@ class App extends Component {
           onChange={this.onInputChange}
           value={this.state.query}
         />
-        <div className="loader" ref={(node) => this.loader = node }></div>
+        <div className="loader" ref={this.loader}></div>
       </div>
       {this.state.data && (
         <React.Fragment>
